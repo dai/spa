@@ -24,7 +24,9 @@
         
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="p">;(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">$</span> <span class="p">)</span> <span class="p">{</span>
+        <div class='highlight'><pre><span class="cm">/*</span>
+
+<span class="p">;(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">$</span> <span class="p">)</span> <span class="p">{</span>
   <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">||</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
       </td>
     </tr>
@@ -38,7 +40,7 @@ multiple containers &amp; spa apps should be theoretically supported, while
 they would have to share URL namespace and routes.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="kd">var</span> <span class="nx">containerElement</span>  <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
+        <div class='highlight'><pre>    <span class="kd">var</span> <span class="nx">containerElement</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
         </pre></div>
       </td>
     </tr>
@@ -52,8 +54,8 @@ aid for context determination. In most cases it is not needed or used,
 but could be helpful for having a &ldquo;last seen products&rdquo; etc.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="nx">previousHash</span>      <span class="o">=</span> <span class="kc">null</span><span class="p">,</span> 
-        <span class="nx">previousParams</span>    <span class="o">=</span> <span class="kc">null</span><span class="p">,</span> </pre></div>
+        <div class='highlight'><pre>        <span class="nx">previousHash</span>   <span class="o">=</span> <span class="kc">null</span><span class="p">,</span> 
+        <span class="nx">previousParams</span> <span class="o">=</span> <span class="kc">null</span><span class="p">,</span> </pre></div>
       </td>
     </tr>
     <tr id='section-4'>
@@ -77,9 +79,9 @@ browsers, we will poll for hash changes</p>
 are injected via public interfaces.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="nx">routes</span>        <span class="o">=</span> <span class="p">[],</span>        
-        <span class="nx">controllers</span>   <span class="o">=</span> <span class="p">{},</span>
-        <span class="nx">callbacks</span>     <span class="o">=</span> <span class="p">{},</span>
+        <div class='highlight'><pre>        <span class="nx">routes</span>      <span class="o">=</span> <span class="p">[],</span>        
+        <span class="nx">controllers</span> <span class="o">=</span> <span class="p">{},</span>
+        <span class="nx">callbacks</span>   <span class="o">=</span> <span class="p">{},</span>
         </pre></div>
       </td>
     </tr>
@@ -218,9 +220,13 @@ value it should be invalidated/removed.</p>
         <span class="p">},</span>
 
 
-        <span class="nx">redirectToPath</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">destinationPath</span><span class="p">)</span> <span class="p">{</span>
-          <span class="nx">spaLog</span><span class="p">(</span><span class="s1">&#39;(spa) redirecting page: &#39;</span> <span class="o">+</span> <span class="nx">destinationPath</span><span class="p">);</span>
-          <span class="nx">location</span><span class="p">.</span><span class="nx">hash</span> <span class="o">=</span> <span class="s1">&#39;#!&#39;</span> <span class="o">+</span> <span class="nx">destinationPath</span><span class="p">;</span>
+        <span class="nx">redirectToPath</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">destinationHashPath</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">url</span> <span class="o">===</span> <span class="s1">&#39;undefined&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">spaLog</span><span class="p">(</span><span class="s1">&#39;(spa) redirecting page: &#39;</span> <span class="o">+</span> <span class="nx">destinationHashPath</span><span class="p">);</span>
+            <span class="nx">location</span><span class="p">.</span><span class="nx">hash</span> <span class="o">=</span> <span class="s1">&#39;#!&#39;</span> <span class="o">+</span> <span class="nx">destinationHashPath</span><span class="p">;</span>
+          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">location</span> <span class="o">=</span> <span class="nx">url</span> <span class="o">+</span> <span class="p">(</span><span class="nx">destinationHashPath</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+          <span class="p">}</span>
         <span class="p">},</span></pre></div>
       </td>
     </tr>
@@ -449,7 +455,7 @@ called and passed parameters found in the hash.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>        <span class="nx">router</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-          <span class="kd">var</span> <span class="nx">currentHash</span>       <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span> <span class="o">||</span> <span class="s1">&#39;#!/&#39;</span><span class="p">,</span>
+          <span class="kd">var</span> <span class="nx">currentHash</span>       <span class="o">=</span> <span class="nx">location</span><span class="p">.</span><span class="nx">hash</span> <span class="o">||</span> <span class="s1">&#39;#!/&#39;</span><span class="p">,</span>
               <span class="nx">pollingAllowed</span>    <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
               <span class="nx">matchedRouteEntry</span> <span class="o">=</span> <span class="kc">null</span><span class="p">,</span>
               <span class="nx">request</span>           <span class="o">=</span> <span class="kc">null</span><span class="p">,</span>
@@ -754,6 +760,10 @@ and routes can be injected.</p>
         <div class='highlight'><pre>    <span class="k">return</span> <span class="p">{</span>
 
       <span class="nx">helpers</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">redirectTo</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">hashPath</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">redirectToPath</span><span class="p">(</span><span class="nx">hashPath</span><span class="p">,</span> <span class="nx">url</span><span class="p">);</span>
+        <span class="p">},</span>
+
         <span class="nx">existsTemplate</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">templateName</span><span class="p">)</span> <span class="p">{</span>
           <span class="k">return</span> <span class="nx">templatesMemo</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">templateName</span><span class="p">);</span>
         <span class="p">},</span>
