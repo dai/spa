@@ -24,6 +24,23 @@
         
       </td>
       <td class=code>
+        <div class='highlight'><pre><span class="cm">/*</span>
+<span class="cm"> *             mm###########mmm</span>
+<span class="cm"> *          m####################m</span>
+<span class="cm"> *        m#####`&quot;#m m###&quot;&quot;&quot;&#39;######m</span>
+<span class="cm"> *       ######*&quot;  &quot;   &quot;   &quot;mm#######</span>
+<span class="cm"> *     m####&quot;  ,             m&quot;#######m       SPA (Single Page App) / jQuery</span>
+<span class="cm"> *    m#### m*&quot; ,&#39;  ;     ,   &quot;########m      </span>
+<span class="cm"> *    ####### m*   m  |#m  ;  m ########      https://github.com/dejanstrbac/spa</span>
+<span class="cm"> *   |######### mm#  |####  #m##########|</span>
+<span class="cm"> *    ###########|  |######m############</span>
+<span class="cm"> *    &quot;##########|  |##################&quot;</span>
+<span class="cm"> *     &quot;#########  |## /##############&quot;</span>
+<span class="cm"> *       ########|  # |/ m###########</span>
+<span class="cm"> *        &quot;#######      ###########&quot;</span>
+<span class="cm"> *          &quot;&quot;&quot;&quot;&quot;&quot;       &quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="cm"> */</span>
+
 <span class="p">;(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">$</span> <span class="p">)</span> <span class="p">{</span>
   <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">||</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
       </td>
@@ -889,26 +906,6 @@ beforeFilter &amp; afterFilter define controller callbacks. To selectively
 execute code in the callback for specific action, you can switch over
 the property <code>action</code> of the request argument, containing the name
 of the routed controller action.</p>
-
-<p>Example of a valid controller object:
- {
-   pages: {</p>
-
-<pre><code>  show: function(request) {
-     // generate some response and then return it as an object
-  }
-</code></pre>
-
-<p>   },
-   afterRender: function(request, response) {</p>
-
-<pre><code>             if (request.action == 'show') {
-               // some logic for the `show` action. 
-             }
-           }
-</code></pre>
-
-<p> }</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>      <span class="nx">addControllers</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newControllers</span><span class="p">)</span> <span class="p">{</span>
@@ -923,24 +920,13 @@ of the routed controller action.</p>
         </div>
         <p>Callbacks are methods which need to run after specific events in the code.
 While controllers can defined own callback which are of higher priority,
-here app level callbacks can be attached. The argument <code>newCallback</code> is
-expected to be an object whose properties are callbacks with possible names
-beforeRender, afterRender, beforeFilter &amp; afterFilter define callbacks.
-To selectively execute a callback for specific action, we can switch over
-the name of the action present in the request argument.</p>
+here app level callbacks can be attached.</p>
 
-<p>Example of a valid callback:</p>
-
-<p> {
-   afterRender: function(request, response) {</p>
-
-<pre><code>               if (request.action == 'show') {
-                 // do something here
-               }
-             }
-</code></pre>
-
-<p> }</p>
+<p>The argument <code>newCallback</code> is  expected to be an object whose properties are
+callbacks with possible names beforeRender, afterRender, beforeFilter
+&amp; afterFilter define callbacks. To selectively execute a callback for
+specific action, we can switch over the name of the action present in
+the request argument.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>      <span class="nx">addCallbacks</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newCallbacks</span><span class="p">)</span> <span class="p">{</span>
@@ -958,14 +944,7 @@ actions. First added routes have higher priority as they are matched
 via regular expressions. The argument <code>newRoutes</code> is expected to be an
 array of object paths.</p>
 
-<p>Example of a valid array of object paths:</p>
-
-<p> [
-   { url: &lsquo;<sup>/product/[0-9]+$&lsquo;,</sup> controller: 'product&rsquo;, action: &lsquo;show&rsquo; },
-   { url: &lsquo;<sup>/action/&lsquo;,</sup>         controller: 'actions&rsquo;                 }
- ]</p>
-
-<p>If action property is ommited as above, the app will assume it&rsquo;s
+<p>If action property is ommited above, the app will assume it&rsquo;s
 called <code>handler</code>. You can define as many routes as needed.</p>
       </td>
       <td class=code>
