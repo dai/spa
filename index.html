@@ -25,7 +25,8 @@
       </td>
       <td class=code>
         <div class='highlight'><pre><span class="p">;(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">$</span> <span class="p">)</span> <span class="p">{</span>
-  <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">||</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
+  <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">||</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">DEFAULT_ACTION_NAME</span> <span class="o">=</span> <span class="s1">&#39;handler&#39;</span><span class="p">,</span></pre></div>
       </td>
     </tr>
     <tr id='section-2'>
@@ -34,12 +35,11 @@
           <a class="pilcrow" href="#section-2">&#182;</a>
         </div>
         <p>Start by memoizing the container element. By attaching to the container,
-multiple containers &amp; spa apps should be theoretically supported, while
+multiple containers &amp; SPA apps should be theoretically supported, while
 they would have to share URL namespace and routes.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="kd">var</span> <span class="nx">containerElement</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
-        </pre></div>
+        <div class='highlight'><pre>        <span class="nx">containerElement</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span></pre></div>
       </td>
     </tr>
     <tr id='section-3'>
@@ -49,11 +49,11 @@ they would have to share URL namespace and routes.</p>
         </div>
         <p>Previous app state is saved given in the request to the controller as
 aid for context determination. In most cases it is not needed or used,
-but could be helpful for having a section of last seen pages e.g.</p>
+but could be helpful for having a section of e.g. last seen pages.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="nx">previousHash</span>   <span class="o">=</span> <span class="kc">null</span><span class="p">,</span> 
-        <span class="nx">previousParams</span> <span class="o">=</span> <span class="kc">null</span><span class="p">,</span> </pre></div>
+        <div class='highlight'><pre>        <span class="nx">previousPath</span>   <span class="o">=</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="nx">previousParams</span> <span class="o">=</span> <span class="kc">null</span><span class="p">,</span></pre></div>
       </td>
     </tr>
     <tr id='section-4'>
@@ -62,7 +62,7 @@ but could be helpful for having a section of last seen pages e.g.</p>
           <a class="pilcrow" href="#section-4">&#182;</a>
         </div>
         <p>When hash listeners are not supported in older browsers, we will poll
-for hash changes every 333 milliseconds.</p>
+for hash changes every <code>333</code> milliseconds.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>        <span class="nx">pollingInterval</span> <span class="o">=</span> <span class="mi">333</span><span class="p">,</span></pre></div>
@@ -77,10 +77,9 @@ for hash changes every 333 milliseconds.</p>
 are injected via public interfaces.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="nx">routes</span>      <span class="o">=</span> <span class="p">[],</span>        
+        <div class='highlight'><pre>        <span class="nx">routes</span>      <span class="o">=</span> <span class="p">[],</span>
         <span class="nx">controllers</span> <span class="o">=</span> <span class="p">{},</span>
-        <span class="nx">callbacks</span>   <span class="o">=</span> <span class="p">{},</span>
-        </pre></div>
+        <span class="nx">callbacks</span>   <span class="o">=</span> <span class="p">{},</span></pre></div>
       </td>
     </tr>
     <tr id='section-6'>
@@ -91,7 +90,7 @@ are injected via public interfaces.</p>
         <p>All templates are stored in memory so no repetitive DOM access is needed.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="nx">templatesMemo</span> <span class="o">=</span> <span class="p">{</span>         
+        <div class='highlight'><pre>        <span class="nx">templatesMemo</span> <span class="o">=</span> <span class="p">{</span>
           <span class="s1">&#39;404&#39;</span><span class="o">:</span> <span class="s1">&#39;&lt;h1&gt;404 Page not found&lt;/h1&gt;&#39;</span>
         <span class="p">},</span></pre></div>
       </td>
@@ -129,10 +128,10 @@ simple. Having some logging in development mode might be helpful.</p>
 throughout the spa application.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="nx">spaLog</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span> 
-          <span class="k">if</span> <span class="p">(</span><span class="nx">debugging</span><span class="p">)</span> <span class="p">{</span> 
-            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span> 
-          <span class="p">}</span> 
+        <div class='highlight'><pre>        <span class="nx">spaLog</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">debugging</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+          <span class="p">}</span>
         <span class="p">},</span></pre></div>
       </td>
     </tr>
@@ -147,12 +146,14 @@ very high. the same mechanisms are opened for app use, by making this
 method public.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="nx">memoize</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">bucket</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">getterFunc</span><span class="p">,</span> <span class="nx">shouldMemoize</span><span class="p">)</span> <span class="p">{</span>                 
-          <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">shouldMemoize</span> <span class="o">===</span> <span class="s1">&#39;undefined&#39;</span><span class="p">)</span> <span class="p">{</span> 
-            <span class="nx">shouldMemoize</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> 
+        <div class='highlight'><pre>        <span class="nx">memoize</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">bucket</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">getterFunc</span><span class="p">,</span> <span class="nx">skipMemoize</span><span class="p">,</span> <span class="nx">conditionalFunc</span><span class="p">)</span> <span class="p">{</span>
+          <span class="kd">var</span> <span class="nx">getterFuncResult</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+          <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">skipMemoize</span> <span class="o">===</span> <span class="s1">&#39;undefined&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">skipMemoize</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
           <span class="p">}</span>
-          
-          <span class="k">if</span> <span class="p">(</span><span class="nx">shouldMemoize</span><span class="p">)</span> <span class="p">{</span></pre></div>
+
+          <span class="k">if</span> <span class="p">(</span><span class="nx">skipMemoize</span><span class="p">)</span> <span class="p">{</span></pre></div>
       </td>
     </tr>
     <tr id='section-11'>
@@ -161,7 +162,7 @@ method public.</p>
           <a class="pilcrow" href="#section-11">&#182;</a>
         </div>
         <p>If the given key is an Array, casting to string will join its
-elements (e.g.) [1,2] into &ldquo;1,2&rdquo; which is again sufficient for the key.</p>
+elements (e.g.) <code>[1,2]</code> into <code>"1,2"</code> which is again sufficient for the key.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="nx">key</span> <span class="o">=</span> <span class="nx">key</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span></pre></div>
@@ -176,8 +177,10 @@ elements (e.g.) [1,2] into &ldquo;1,2&rdquo; which is again sufficient for the k
 the values in the application.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="nx">bucket</span> <span class="o">=</span> <span class="nx">bucket</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>            
-            <span class="nx">objectsMemo</span><span class="p">[</span><span class="nx">bucket</span><span class="p">]</span> <span class="o">=</span> <span class="nx">objectsMemo</span><span class="p">[</span><span class="nx">bucket</span><span class="p">]</span> <span class="o">||</span> <span class="p">{};</span>        </pre></div>
+        <div class='highlight'><pre>            <span class="nx">bucket</span> <span class="o">=</span> <span class="nx">bucket</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">objectsMemo</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">bucket</span><span class="p">))</span> <span class="p">{</span>
+              <span class="nx">objectsMemo</span><span class="p">[</span><span class="nx">bucket</span><span class="p">]</span> <span class="o">=</span> <span class="p">{};</span>
+            <span class="p">}</span></pre></div>
       </td>
     </tr>
     <tr id='section-13'>
@@ -191,14 +194,8 @@ Set it if it does not, otherwise just return it.</p>
       <td class=code>
         <div class='highlight'><pre>            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">objectsMemo</span><span class="p">[</span><span class="nx">bucket</span><span class="p">].</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
               <span class="nx">spaLog</span><span class="p">(</span><span class="s1">&#39;(spa) mem miss: &#39;</span> <span class="o">+</span> <span class="nx">bucket</span> <span class="o">+</span> <span class="s1">&#39;[&#39;</span> <span class="o">+</span> <span class="nx">key</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span><span class="p">);</span>
-              <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">getterFunc</span> <span class="o">!==</span> <span class="s1">&#39;undefined&#39;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">objectsMemo</span><span class="p">[</span><span class="nx">bucket</span><span class="p">][</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">getterFunc</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
-              <span class="p">}</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-              <span class="nx">spaLog</span><span class="p">(</span><span class="s1">&#39;(spa) mem hit: &#39;</span> <span class="o">+</span> <span class="nx">bucket</span> <span class="o">+</span> <span class="s1">&#39;[&#39;</span> <span class="o">+</span> <span class="nx">key</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="k">return</span> <span class="nx">objectsMemo</span><span class="p">[</span><span class="nx">bucket</span><span class="p">][</span><span class="nx">key</span><span class="p">];</span>
-          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span></pre></div>
+              <span class="k">if</span> <span class="p">(</span><span class="nx">getterFunc</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">getterFuncResult</span> <span class="o">=</span> <span class="nx">getterFunc</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span></pre></div>
       </td>
     </tr>
     <tr id='section-14'>
@@ -206,22 +203,80 @@ Set it if it does not, otherwise just return it.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-14">&#182;</a>
         </div>
-        <p>Memoization is being skipped. If there was an existing memorized
-value it should be invalidated/removed.</p>
+        <p>If a <code>conditionalFunc</code> function is passed, the response from
+the <code>getterFunc</code> is passed through it to determine whether
+memoization should happen or not. The <code>conditionalFunc</code> should
+return a boolean value.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="k">if</span> <span class="p">(</span><span class="nx">objectsMemo</span><span class="p">[</span><span class="nx">bucket</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">objectsMemo</span><span class="p">[</span><span class="nx">bucket</span><span class="p">].</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
-              <span class="k">delete</span> <span class="nx">objectsMemo</span><span class="p">[</span><span class="nx">bucket</span><span class="p">][</span><span class="nx">key</span><span class="p">];</span>
+        <div class='highlight'><pre>                <span class="k">if</span> <span class="p">((</span><span class="k">typeof</span> <span class="nx">conditionalFunc</span> <span class="o">===</span> <span class="s1">&#39;undefined&#39;</span><span class="p">)</span> <span class="o">||</span>
+                    <span class="p">(</span><span class="nx">conditionalFunc</span> <span class="o">&amp;&amp;</span> <span class="nx">conditionalFunc</span><span class="p">(</span><span class="nx">getterFuncResult</span><span class="p">)))</span> <span class="p">{</span>
+                  <span class="nx">objectsMemo</span><span class="p">[</span><span class="nx">bucket</span><span class="p">][</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">getterFuncResult</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">return</span> <span class="nx">getterFuncResult</span><span class="p">;</span>
+              <span class="p">}</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+              <span class="nx">spaLog</span><span class="p">(</span><span class="s1">&#39;(spa) mem hit: &#39;</span> <span class="o">+</span> <span class="nx">bucket</span> <span class="o">+</span> <span class="s1">&#39;[&#39;</span> <span class="o">+</span> <span class="nx">key</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span><span class="p">);</span>
+              <span class="k">return</span> <span class="nx">objectsMemo</span><span class="p">[</span><span class="nx">bucket</span><span class="p">][</span><span class="nx">key</span><span class="p">];</span>
             <span class="p">}</span>
-            <span class="k">return</span> <span class="nx">getterFunc</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
-          <span class="p">}</span>
-        <span class="p">},</span></pre></div>
+          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span></pre></div>
       </td>
     </tr>
     <tr id='section-15'>
       <td class=docs>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-15">&#182;</a>
+        </div>
+        <p>Memoization is being skipped. If there was an existing memorized
+value it should be invalidated/removed.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="k">if</span> <span class="p">(</span><span class="nx">objectsMemo</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">bucket</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+                <span class="nx">objectsMemo</span><span class="p">[</span><span class="nx">bucket</span><span class="p">].</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
+              <span class="k">delete</span> <span class="nx">objectsMemo</span><span class="p">[</span><span class="nx">bucket</span><span class="p">][</span><span class="nx">key</span><span class="p">];</span>
+            <span class="p">}</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-16'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-16">&#182;</a>
+        </div>
+        <p>If <code>getterFunc</code> is <code>null</code>, the call is made just for deleting the
+memoized version, hence clearing the cache.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="k">if</span> <span class="p">(</span><span class="nx">getterFunc</span><span class="p">)</span> <span class="p">{</span>
+              <span class="k">return</span> <span class="nx">getterFunc</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+            <span class="p">}</span>
+          <span class="p">}</span>
+        <span class="p">},</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-17'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-17">&#182;</a>
+        </div>
+        <p>SPA includes own simple dummy renderer. It can be redefined by calling
+<code>setRenderer</code> which will override this method. If there is a problem,
+it should return either null or false.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="nx">templateRenderer</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">p</span><span class="p">))</span> <span class="p">{</span>
+              <span class="nx">template</span> <span class="o">=</span> <span class="nx">template</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s1">&#39;{{&#39;</span><span class="o">+</span><span class="nx">p</span><span class="o">+</span><span class="s1">&#39;}}&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">),</span> <span class="nx">data</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="p">);</span>
+            <span class="p">}</span>
+          <span class="p">}</span>
+          <span class="k">return</span> <span class="nx">template</span><span class="p">;</span>
+        <span class="p">},</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-18'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-18">&#182;</a>
         </div>
         <p>We need a simple way of redirecting, by default to SPA hash bang
 paths, buy also possibly with a different url method. This can for
@@ -239,10 +294,10 @@ a redirect option (see below).</p>
         <span class="p">},</span></pre></div>
       </td>
     </tr>
-    <tr id='section-16'>
+    <tr id='section-19'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-16">&#182;</a>
+          <a class="pilcrow" href="#section-19">&#182;</a>
         </div>
         <p>Not all browser support the onhashchange event. We must check
 and if not supported fallback to alternative solution of polling.
@@ -251,75 +306,8 @@ from YUI to filter out IE8 Compatibility Mode which gives false positives.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>        <span class="nx">isHashChangeSupported</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-          <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;onhashchange&#39;</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="o">&amp;&amp;</span> 
+          <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;onhashchange&#39;</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
                  <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">documentMode</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="o">||</span> <span class="nb">document</span><span class="p">.</span><span class="nx">documentMode</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">);</span>
-        <span class="p">},</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-17'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-17">&#182;</a>
-        </div>
-        <p>Starts the SPA app router, not forgetting to process the current
-hash path, so the SPA app jumps to the desired state &ndash; as in the
-case of copy/pasting a whole url.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>        <span class="nx">startRouter</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>                                                         
-          <span class="k">if</span> <span class="p">(</span><span class="nx">isHashChangeSupported</span><span class="p">())</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;hashchange&#39;</span><span class="p">,</span> <span class="nx">router</span><span class="p">);</span>
-          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>          
-            <span class="nx">setInterval</span><span class="p">(</span><span class="nx">router</span><span class="p">,</span> <span class="nx">pollingInterval</span><span class="p">);</span>
-          <span class="p">}</span>              
-          <span class="nx">router</span><span class="p">();</span>                                                             
-        <span class="p">},</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-18'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-18">&#182;</a>
-        </div>
-        <p>There are callbacks defined in multiple places in the router,
-such as <code>beforeRender</code>, <code>afterRender</code> etc. The logic is the same,<br/>
-so this method has been extracted out and generalized. There are
-two levels of callbacks, one on the app level, which will run for
-every controller, and there are callbacks on the controller level.
-/
-Controller callbacks have higher priority than the app ones as they
-are closer to the logic code.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>        <span class="nx">runCallbacks</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callbackName</span><span class="p">,</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
-          <span class="k">if</span> <span class="p">(</span><span class="nx">controllers</span><span class="p">[</span><span class="nx">request</span><span class="p">.</span><span class="nx">controller</span><span class="p">][</span><span class="nx">callbackName</span><span class="p">])</span> <span class="p">{</span>                  
-            <span class="p">(</span><span class="nx">controllers</span><span class="p">[</span><span class="nx">request</span><span class="p">.</span><span class="nx">controller</span><span class="p">][</span><span class="nx">callbackName</span><span class="p">])(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span>                   
-            <span class="nx">spaLog</span><span class="p">(</span><span class="s1">&#39;(spa) callback &#39;</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">controller</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="nx">callbackName</span> <span class="o">+</span> <span class="s1">&#39;()&#39;</span><span class="p">);</span>
-          <span class="p">}</span>
-          <span class="k">if</span> <span class="p">(</span><span class="nx">callbacks</span><span class="p">[</span><span class="nx">callbackName</span><span class="p">])</span> <span class="p">{</span>                                                     
-            <span class="p">(</span><span class="nx">callbacks</span><span class="p">[</span><span class="nx">callbackName</span><span class="p">])(</span><span class="nx">request</span><span class="p">);</span>
-            <span class="nx">spaLog</span><span class="p">(</span><span class="s1">&#39;(spa) callback &#39;</span> <span class="o">+</span> <span class="nx">callbackName</span> <span class="o">+</span> <span class="s1">&#39;()&#39;</span><span class="p">);</span>
-          <span class="p">}</span>
-        <span class="p">},</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-19'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-19">&#182;</a>
-        </div>
-        <p>SPA includes own simple dummy renderer. It can be redefined by calling
-<code>setRenderer</code> which will override this method. If there is a problem,
-it should return either null or false.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>        <span class="nx">templateRenderer</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>          
-          <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">p</span><span class="p">))</span> <span class="p">{</span>
-              <span class="nx">template</span> <span class="o">=</span> <span class="nx">template</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s1">&#39;{{&#39;</span><span class="o">+</span><span class="nx">p</span><span class="o">+</span><span class="s1">&#39;}}&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">),</span> <span class="nx">data</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="p">);</span>
-            <span class="p">}</span>
-          <span class="p">}</span>
-          <span class="k">return</span> <span class="nx">template</span><span class="p">;</span>
         <span class="p">},</span></pre></div>
       </td>
     </tr>
@@ -328,98 +316,15 @@ it should return either null or false.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-20">&#182;</a>
         </div>
-        <p><code>@TODO: We need a preloader here of content. Currently not so dry.
-  routeEntry = routeFor(urlpath)
-  response = ...
-maybe even use it in the router</code></p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>          </pre></div>
-      </td>
-    </tr>
-    <tr id='section-21'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-21">&#182;</a>
-        </div>
-        <p>Rendering, wrapping and setting of the template into the defined
-application container. Wrapping is done so that the effort of
-insertion as well deletion is minimal on the DOM. At the same time,
-removal is done before setting so that the possible events are cleared,
-preventing memory leaks.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>        <span class="nx">renderTemplate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">templateId</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-          <span class="kd">var</span> <span class="nx">template</span>      <span class="o">=</span> <span class="nx">templatesMemo</span><span class="p">[</span><span class="nx">templateId</span><span class="p">],</span>
-              <span class="nx">renderedView</span>  <span class="o">=</span> <span class="kc">null</span><span class="p">,</span>
-              <span class="nx">cacheKey</span>      <span class="o">=</span> <span class="kc">null</span> <span class="p">;</span>
-
-          <span class="nx">data</span>    <span class="o">=</span> <span class="nx">data</span>    <span class="o">||</span> <span class="p">{};</span>
-          <span class="nx">options</span> <span class="o">=</span> <span class="nx">options</span> <span class="o">||</span> <span class="p">{};</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-22'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-22">&#182;</a>
-        </div>
-        <p>The cache key is the template name for nonmutating views, where the
-attribute cache is just set to true. To cache same views but for
-different data, the attribute cache needs to be set to some data
-that will uniquely identify it &ndash; e.g. id of a product.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>          <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">cache</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">cache</span> <span class="o">===</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
-              <span class="nx">cacheKey</span> <span class="o">=</span> <span class="nx">templateId</span><span class="p">;</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-              <span class="nx">cacheKey</span> <span class="o">=</span> <span class="nx">templateId</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="nx">options</span><span class="p">.</span><span class="nx">cache</span><span class="p">;</span>
-            <span class="p">}</span>
-          <span class="p">}</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-23'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-23">&#182;</a>
-        </div>
-        <p>Using the same memoization mechanism defined above, we will
-cache the views that allow it, so they do not need to be re-rendered.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>          <span class="nx">renderedView</span> <span class="o">=</span> <span class="nx">memoize</span><span class="p">(</span><span class="s1">&#39;spa__views&#39;</span><span class="p">,</span> <span class="nx">cacheKey</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">tmpView</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">template</span><span class="p">)</span> <span class="p">{</span>
-              <span class="nx">tmpView</span> <span class="o">=</span> <span class="nx">templateRenderer</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>              
-              <span class="k">if</span> <span class="p">(</span><span class="nx">tmpView</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="s1">&#39;&lt;div id=&quot;spa__wrap&quot;&gt;&#39;</span> <span class="o">+</span> <span class="nx">tmpView</span> <span class="o">+</span> <span class="s1">&#39;&lt;/div&gt;&#39;</span><span class="p">;</span>
-              <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;(spa) template could not be rendered &gt;&gt; &#39;</span> <span class="o">+</span> <span class="nx">templateId</span><span class="p">);</span>
-              <span class="p">}</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-              <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;(spa) template does not exist &gt;&gt; &#39;</span> <span class="o">+</span> <span class="nx">templateId</span><span class="p">);</span>
-            <span class="p">}</span>
-          <span class="p">},</span> <span class="p">(</span><span class="nx">cacheKey</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">));</span>
-
-          <span class="nx">containerElement</span><span class="p">.</span><span class="nx">empty</span><span class="p">().</span><span class="nx">html</span><span class="p">(</span><span class="nx">renderedView</span><span class="p">);</span>
-        <span class="p">},</span>
-        </pre></div>
-      </td>
-    </tr>
-    <tr id='section-24'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-24">&#182;</a>
-        </div>
         <p>Parsing of the the current location hash and splitting it in
 REST-like parameters which are returned.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>        <span class="nx">getParams</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
-          <span class="kd">var</span> <span class="nx">qs</span>       <span class="o">=</span> <span class="nx">str</span> <span class="o">||</span> <span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">,</span>
-              <span class="nx">params</span>   <span class="o">=</span> <span class="p">{},</span>
-              <span class="nx">qsArray</span><span class="p">,</span>
-              <span class="nx">pair</span><span class="p">;</span>
+          <span class="kd">var</span> <span class="nx">qs</span>      <span class="o">=</span> <span class="nx">str</span> <span class="o">||</span> <span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">,</span>
+              <span class="nx">params</span>  <span class="o">=</span> <span class="p">{},</span>
+              <span class="nx">qsArray</span> <span class="o">=</span> <span class="kc">null</span><span class="p">,</span>
+              <span class="nx">pair</span>    <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
           <span class="k">if</span> <span class="p">(</span><span class="nx">qs</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/^\#\!/</span><span class="p">))</span> <span class="p">{</span>
             <span class="nx">qsArray</span> <span class="o">=</span> <span class="nx">qs</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">);</span>
             <span class="k">while</span> <span class="p">(</span><span class="nx">qsArray</span><span class="p">.</span><span class="nx">length</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
@@ -428,39 +333,37 @@ REST-like parameters which are returned.</p>
             <span class="p">}</span>
           <span class="p">}</span>
           <span class="k">return</span> <span class="nx">params</span><span class="p">;</span>
-        <span class="p">},</span>
-
-        </pre></div>
+        <span class="p">},</span></pre></div>
       </td>
     </tr>
-    <tr id='section-25'>
+    <tr id='section-21'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-25">&#182;</a>
+          <a class="pilcrow" href="#section-21">&#182;</a>
         </div>
         <p>Finding out the current route based on the information passed into
 the hash, and returning the route entry with all its content back.
 SPA routes start with <code>#!</code> &ndash; (hash bang).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="nx">getRouteFor</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">hash</span><span class="p">)</span> <span class="p">{</span>
+        <div class='highlight'><pre>        <span class="nx">getRouteFor</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="p">{</span>
           <span class="kd">var</span> <span class="nx">currentRoute</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span></pre></div>
       </td>
     </tr>
-    <tr id='section-26'>
+    <tr id='section-22'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-26">&#182;</a>
+          <a class="pilcrow" href="#section-22">&#182;</a>
         </div>
         <p>We will first try matching the root route, as with highest priority.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>          <span class="k">if</span> <span class="p">(</span><span class="nx">hash</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/^$|^#(?!\!).+/</span><span class="p">))</span> <span class="p">{</span>
-            <span class="nx">currentRoute</span> <span class="o">=</span> <span class="nx">routes</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span> 
-          <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">hash</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/^\#\!.+/</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">routes</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">currentRoute</span><span class="p">;</span> <span class="nx">i</span><span class="o">+=</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>                
-              <span class="k">if</span> <span class="p">(</span><span class="nb">RegExp</span><span class="p">(</span><span class="nx">routes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">url</span><span class="p">).</span><span class="nx">test</span><span class="p">(</span><span class="nx">hash</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span> <span class="p">{</span>                
-                <span class="nx">currentRoute</span> <span class="o">=</span> <span class="nx">routes</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span> 
+        <div class='highlight'><pre>          <span class="k">if</span> <span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/^$|^#(?!\!).+/</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">currentRoute</span> <span class="o">=</span> <span class="nx">routes</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+          <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/^\#\!.+/</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">routes</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">currentRoute</span><span class="p">;</span> <span class="nx">i</span><span class="o">+=</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+              <span class="k">if</span> <span class="p">(</span><span class="nb">RegExp</span><span class="p">(</span><span class="nx">routes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">url</span><span class="p">).</span><span class="nx">test</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span> <span class="p">{</span>
+                <span class="nx">currentRoute</span> <span class="o">=</span> <span class="nx">routes</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
               <span class="p">}</span>
             <span class="p">}</span>
           <span class="p">}</span>
@@ -468,10 +371,279 @@ SPA routes start with <code>#!</code> &ndash; (hash bang).</p>
         <span class="p">},</span></pre></div>
       </td>
     </tr>
+    <tr id='section-23'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-23">&#182;</a>
+        </div>
+        <p>Based on the passed request, respective controller action is called
+and its contents get memoized. A conditional function is passed to
+determine whether the response should be memoized or not.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="nx">getControllerActionResponseFor</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">request</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="nx">memoize</span><span class="p">(</span><span class="s1">&#39;spa__responses&#39;</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">path</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">(</span><span class="nx">controllers</span><span class="p">[</span><span class="nx">request</span><span class="p">.</span><span class="nx">controller</span><span class="p">][</span><span class="nx">request</span><span class="p">.</span><span class="nx">action</span><span class="p">])(</span><span class="nx">request</span><span class="p">);</span>
+          <span class="p">},</span> <span class="kc">true</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-24'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-24">&#182;</a>
+        </div>
+        <p>Conditional memoization function, will return true if property
+<code>options.cache</code> is not <code>undefined</code>, <code>0</code>, <code>null</code>, or <code>''</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="k">return</span> <span class="o">!!</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cache</span><span class="p">;</span>
+          <span class="p">});</span>
+        <span class="p">},</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-25'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-25">&#182;</a>
+        </div>
+        <p>There are callbacks defined in multiple places in the router,
+such as <code>beforeRender</code>, <code>afterRender</code> etc. The logic is the same,
+so this method has been extracted out and generalized. There are
+two levels of callbacks, one on the app level, which will run for
+every controller, and there are callbacks on the controller level.</p>
+
+<p>Controller callbacks have higher priority than the app ones as they
+are closer to the logic code.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="nx">runCallbacks</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callbackName</span><span class="p">,</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">controllers</span><span class="p">[</span><span class="nx">request</span><span class="p">.</span><span class="nx">controller</span><span class="p">][</span><span class="nx">callbackName</span><span class="p">])</span> <span class="p">{</span>
+            <span class="p">(</span><span class="nx">controllers</span><span class="p">[</span><span class="nx">request</span><span class="p">.</span><span class="nx">controller</span><span class="p">][</span><span class="nx">callbackName</span><span class="p">])(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span>
+            <span class="nx">spaLog</span><span class="p">(</span><span class="s1">&#39;(spa) callback &#39;</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">controller</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="nx">callbackName</span> <span class="o">+</span> <span class="s1">&#39;()&#39;</span><span class="p">);</span>
+          <span class="p">}</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">callbacks</span><span class="p">[</span><span class="nx">callbackName</span><span class="p">])</span> <span class="p">{</span>
+            <span class="p">(</span><span class="nx">callbacks</span><span class="p">[</span><span class="nx">callbackName</span><span class="p">])(</span><span class="nx">request</span><span class="p">);</span>
+            <span class="nx">spaLog</span><span class="p">(</span><span class="s1">&#39;(spa) callback &#39;</span> <span class="o">+</span> <span class="nx">callbackName</span> <span class="o">+</span> <span class="s1">&#39;()&#39;</span><span class="p">);</span>
+          <span class="p">}</span>
+        <span class="p">},</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-26'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-26">&#182;</a>
+        </div>
+        <p>Based on request and response, this method will determine which
+is the right template to render. It returns template name.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="nx">getTemplateNameFor</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span></pre></div>
+      </td>
+    </tr>
     <tr id='section-27'>
       <td class=docs>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-27">&#182;</a>
+        </div>
+        <p>Assume the controller name for the template and using single action
+controllers called <code>handler</code> as defined in <code>DEFAULT_ACTION_NAME</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="kd">var</span> <span class="nx">templateToRender</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">controller</span><span class="p">;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-28'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-28">&#182;</a>
+        </div>
+        <p>The controller can pass a name of the template to render
+in the options part of the response. Otherwise it can be
+assumed by the action name.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">templateToRender</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span><span class="p">;</span>
+          <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">action</span><span class="p">)</span> <span class="p">{</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-29'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-29">&#182;</a>
+        </div>
+        <p>If action is passed, we will assume that action name
+as template definition.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="nx">templateToRender</span> <span class="o">+=</span> <span class="s1">&#39;__&#39;</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">action</span><span class="p">;</span>
+          <span class="p">}</span>
+          <span class="k">return</span> <span class="nx">templateToRender</span><span class="p">;</span>
+        <span class="p">},</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-30'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-30">&#182;</a>
+        </div>
+        <p>Rendering, wrapping and setting of the template into the defined
+application container. Wrapping is done so that the effort of
+insertion as well deletion is minimal on the DOM. At the same time,
+removal is done before setting so that the possible events are cleared,
+preventing memory leaks.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="nx">renderTemplate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+          <span class="kd">var</span> <span class="nx">template</span>      <span class="o">=</span> <span class="nx">templatesMemo</span><span class="p">[</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span><span class="p">],</span>
+              <span class="nx">renderedView</span>  <span class="o">=</span> <span class="kc">null</span><span class="p">,</span>
+              <span class="nx">cacheKey</span>      <span class="o">=</span> <span class="kc">null</span> <span class="p">;</span>
+
+          <span class="nx">response</span><span class="p">.</span><span class="nx">data</span>    <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">data</span>    <span class="o">||</span> <span class="p">{};</span>
+          <span class="nx">response</span><span class="p">.</span><span class="nx">options</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span> <span class="o">||</span> <span class="p">{};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-31'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-31">&#182;</a>
+        </div>
+        <p>The cache key is the template name for nonmutating views, where the
+attribute cache is just set to true. To cache same views but for
+different data, the attribute cache needs to be set to some data
+that will uniquely identify it &ndash; e.g. id of a product.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cache</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cache</span> <span class="o">===</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+              <span class="nx">cacheKey</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+              <span class="nx">cacheKey</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cache</span><span class="p">;</span>
+            <span class="p">}</span>
+          <span class="p">}</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-32'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-32">&#182;</a>
+        </div>
+        <p>Using the same memoization mechanism defined above, we will
+cache the views that allow it, so they do not need to be re-rendered.
+if the <code>cacheKey</code> is <code>null</code> the wrapped memoization method will be
+circumvented and the getter function will be executed.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="nx">renderedView</span> <span class="o">=</span> <span class="nx">memoize</span><span class="p">(</span><span class="s1">&#39;spa__views&#39;</span><span class="p">,</span> <span class="nx">cacheKey</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">tmpView</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">template</span><span class="p">)</span> <span class="p">{</span>
+              <span class="nx">tmpView</span> <span class="o">=</span> <span class="nx">templateRenderer</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+              <span class="k">if</span> <span class="p">(</span><span class="nx">tmpView</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="s1">&#39;&lt;div id=&quot;spa__wrap&quot;&gt;&#39;</span> <span class="o">+</span> <span class="nx">tmpView</span> <span class="o">+</span> <span class="s1">&#39;&lt;/div&gt;&#39;</span><span class="p">;</span>
+              <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;(spa) template could not be rendered &gt;&gt; &#39;</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span><span class="p">);</span>
+              <span class="p">}</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+              <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;(spa) template does not exist &gt;&gt; &#39;</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span><span class="p">);</span>
+            <span class="p">}</span>
+          <span class="p">},</span> <span class="p">(</span><span class="nx">cacheKey</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">));</span>
+
+          <span class="k">return</span> <span class="nx">renderedView</span><span class="p">;</span>
+        <span class="p">},</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-33'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-33">&#182;</a>
+        </div>
+        <p>SPA has ability to preload a spa path by calling the controller
+action in the background and rendering its returned template for
+memoization purposes. Once in memory, subsequent renderings of possible
+next paths would only call callbacks, making the response time even
+shorter.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="nx">preloadPath</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">destinationPath</span><span class="p">)</span> <span class="p">{</span>
+          <span class="kd">var</span> <span class="nx">preloadRoute</span> <span class="o">=</span> <span class="nx">getRouteFor</span><span class="p">(</span><span class="nx">destinationPath</span><span class="p">),</span>
+              <span class="nx">currentPath</span>  <span class="o">=</span> <span class="nx">location</span><span class="p">.</span><span class="nx">hash</span> <span class="o">||</span> <span class="s1">&#39;#!/&#39;</span><span class="p">,</span>
+              <span class="nx">request</span>      <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+          <span class="k">if</span> <span class="p">(</span><span class="nx">preloadRoute</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">request</span> <span class="o">=</span> <span class="p">{</span>
+              <span class="nx">path</span>           <span class="o">:</span> <span class="nx">destinationPath</span><span class="p">,</span>
+              <span class="nx">previousPath</span>   <span class="o">:</span> <span class="nx">currentPath</span><span class="p">,</span>
+              <span class="nx">params</span>         <span class="o">:</span> <span class="nx">getParams</span><span class="p">(</span><span class="nx">destinationPath</span><span class="p">),</span>
+              <span class="nx">previousParams</span> <span class="o">:</span> <span class="nx">getParams</span><span class="p">(</span><span class="nx">currentPath</span><span class="p">),</span>
+              <span class="nx">controller</span>     <span class="o">:</span> <span class="nx">preloadRoute</span><span class="p">.</span><span class="nx">controller</span><span class="p">,</span>
+              <span class="nx">action</span>         <span class="o">:</span> <span class="nx">preloadRoute</span><span class="p">.</span><span class="nx">action</span> <span class="o">||</span> <span class="nx">DEFAULT_ACTION_NAME</span>
+            <span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-34'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-34">&#182;</a>
+        </div>
+        <p>A call to the controller is being made assuming it will memoize
+the response for possible future request.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="nx">response</span> <span class="o">=</span> <span class="nx">getControllerActionResponseFor</span><span class="p">(</span><span class="nx">request</span><span class="p">);</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-35'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-35">&#182;</a>
+        </div>
+        <p>Preloading does not return anything nor does it render any templates.
+Rendering is being called only to memoize the response which is here
+discarded.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">renderNothing</span><span class="p">)</span> <span class="p">{</span>
+              <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span> <span class="o">=</span> <span class="nx">getTemplateNameFor</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span>
+              <span class="nx">renderTemplate</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="nx">spaLog</span><span class="p">(</span><span class="s1">&#39;(spa) preloaded path: &#39;</span> <span class="o">+</span> <span class="nx">destinationPath</span><span class="p">);</span>
+          <span class="p">}</span>
+        <span class="p">},</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-36'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-36">&#182;</a>
+        </div>
+        <p>This method will determine all unique paths which look are SPA-like
+in the passed container element, starting with a hash bang and their
+respective anchors not having class <code>.spa-no-preload</code>. For the collected
+paths, <code>preloadPath</code> method will be called to memoize controller actions
+and rendered templates. The method will return all preloaded paths in
+case they are needed in the controller.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="nx">preloadElementPaths</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+          <span class="kd">var</span> <span class="nx">preloadedPaths</span> <span class="o">=</span> <span class="p">[];</span>
+          <span class="nx">el</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">nextPath</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">nextPath</span> <span class="o">&amp;&amp;</span>
+                <span class="o">!</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">hasClass</span><span class="p">(</span><span class="s1">&#39;.spa-no-preload&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+                <span class="p">(</span><span class="nx">nextPath</span><span class="p">.</span><span class="nx">lastIndexOf</span><span class="p">(</span><span class="s1">&#39;#!/&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+                <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">inArray</span><span class="p">(</span><span class="nx">nextPath</span><span class="p">,</span> <span class="nx">preloadedPaths</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+              <span class="nx">preloadPath</span><span class="p">(</span><span class="nx">nextPath</span><span class="p">);</span>
+              <span class="nx">preloadedPaths</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">nextPath</span><span class="p">);</span>
+            <span class="p">}</span>
+          <span class="p">});</span>
+          <span class="k">return</span> <span class="nx">preloadedPaths</span><span class="p">;</span>
+        <span class="p">},</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-37'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-37">&#182;</a>
         </div>
         <p>The router is invoked on every hash change. The route is parsed and
 compared to predefined routes. Matching controller/action is then
@@ -479,22 +651,19 @@ called and passed parameters found in the hash.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>        <span class="nx">router</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-          <span class="kd">var</span> <span class="nx">currentHash</span>       <span class="o">=</span> <span class="nx">location</span><span class="p">.</span><span class="nx">hash</span> <span class="o">||</span> <span class="s1">&#39;#!/&#39;</span><span class="p">,</span>
+          <span class="kd">var</span> <span class="nx">currentPath</span>       <span class="o">=</span> <span class="nx">location</span><span class="p">.</span><span class="nx">hash</span> <span class="o">||</span> <span class="s1">&#39;#!/&#39;</span><span class="p">,</span>
               <span class="nx">pollingAllowed</span>    <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
               <span class="nx">matchedRouteEntry</span> <span class="o">=</span> <span class="kc">null</span><span class="p">,</span>
               <span class="nx">request</span>           <span class="o">=</span> <span class="kc">null</span><span class="p">,</span>
-              <span class="nx">response</span>          <span class="o">=</span> <span class="kc">null</span><span class="p">,</span>             
-              <span class="nx">templateToRender</span>  <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>     
-          
+              <span class="nx">response</span>          <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 
-          <span class="k">if</span> <span class="p">(</span><span class="nx">pollingAllowed</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">currentHash</span> <span class="o">!==</span> <span class="nx">previousHash</span><span class="p">))</span> <span class="p">{</span>
-      </pre></div>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">pollingAllowed</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">currentPath</span> <span class="o">!==</span> <span class="nx">previousPath</span><span class="p">))</span> <span class="p">{</span></pre></div>
       </td>
     </tr>
-    <tr id='section-28'>
+    <tr id='section-38'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-28">&#182;</a>
+          <a class="pilcrow" href="#section-38">&#182;</a>
         </div>
         <p>In case of older browsers (IE6/7), where we use hash polling instead
 of hash change events, polling needs to be terminated when we are
@@ -503,63 +672,60 @@ controller/action &amp; re-renderring is avoided.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="nx">pollingAllowed</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-            <span class="nx">matchedRouteEntry</span> <span class="o">=</span> <span class="nx">getRouteFor</span><span class="p">(</span><span class="nx">currentHash</span><span class="p">);</span>
+            <span class="nx">matchedRouteEntry</span> <span class="o">=</span> <span class="nx">getRouteFor</span><span class="p">(</span><span class="nx">currentPath</span><span class="p">);</span>
 
             <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">matchedRouteEntry</span><span class="p">)</span> <span class="p">{</span></pre></div>
       </td>
     </tr>
-    <tr id='section-29'>
+    <tr id='section-39'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-29">&#182;</a>
+          <a class="pilcrow" href="#section-39">&#182;</a>
         </div>
         <p>The route has not been recognized and we need to simulate a
 404 response. The 404 template can be defined just as any other.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>              <span class="nx">renderTemplate</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="p">{</span> <span class="nx">cache</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+        <div class='highlight'><pre>              <span class="nx">renderTemplate</span><span class="p">({</span> <span class="nx">options</span> <span class="o">:</span> <span class="p">{</span> <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;404&#39;</span><span class="p">,</span> <span class="nx">cache</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">});</span>
             <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
               <span class="nx">request</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="nx">path</span>           <span class="o">:</span> <span class="nx">currentHash</span><span class="p">,</span>
-                <span class="nx">previousPath</span>   <span class="o">:</span> <span class="nx">previousHash</span><span class="p">,</span>                
-                <span class="nx">params</span>         <span class="o">:</span> <span class="nx">getParams</span><span class="p">(</span><span class="nx">currentHash</span><span class="p">),</span>
+                <span class="nx">path</span>           <span class="o">:</span> <span class="nx">currentPath</span><span class="p">,</span>
+                <span class="nx">previousPath</span>   <span class="o">:</span> <span class="nx">previousPath</span><span class="p">,</span>
+                <span class="nx">params</span>         <span class="o">:</span> <span class="nx">getParams</span><span class="p">(</span><span class="nx">currentPath</span><span class="p">),</span>
                 <span class="nx">previousParams</span> <span class="o">:</span> <span class="nx">previousParams</span><span class="p">,</span>
                 <span class="nx">controller</span>     <span class="o">:</span> <span class="nx">matchedRouteEntry</span><span class="p">.</span><span class="nx">controller</span><span class="p">,</span>
-                <span class="nx">action</span>         <span class="o">:</span> <span class="nx">matchedRouteEntry</span><span class="p">.</span><span class="nx">action</span> <span class="o">||</span> <span class="s1">&#39;handler&#39;</span>
-              <span class="p">}</span>
-              </pre></div>
+                <span class="nx">action</span>         <span class="o">:</span> <span class="nx">matchedRouteEntry</span><span class="p">.</span><span class="nx">action</span> <span class="o">||</span> <span class="nx">DEFAULT_ACTION_NAME</span>
+              <span class="p">};</span></pre></div>
       </td>
     </tr>
-    <tr id='section-30'>
+    <tr id='section-40'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-30">&#182;</a>
+          <a class="pilcrow" href="#section-40">&#182;</a>
         </div>
         <p>Run the <code>beforeFilter</code> callbacks defined in controller and on top
 level. Note that the response doesn&rsquo;t exist yet so it is not passed here.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>              <span class="nx">runCallbacks</span><span class="p">(</span><span class="s1">&#39;beforeFilter&#39;</span><span class="p">,</span> <span class="nx">request</span><span class="p">);</span>
-              </pre></div>
+        <div class='highlight'><pre>              <span class="nx">runCallbacks</span><span class="p">(</span><span class="s1">&#39;beforeFilter&#39;</span><span class="p">,</span> <span class="nx">request</span><span class="p">);</span></pre></div>
       </td>
     </tr>
-    <tr id='section-31'>
+    <tr id='section-41'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-31">&#182;</a>
+          <a class="pilcrow" href="#section-41">&#182;</a>
         </div>
-        <p>Call the respective route&rsquo;s defined action with the params
-fetched from the hash and pass in the previous ones for possible
-context determination of the origin page if needed.</p>
+        <p>Fetch the response by calling the respective route&rsquo;s defined
+controller and action and passing the request object formed before.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>              <span class="nx">response</span> <span class="o">=</span> <span class="p">(</span><span class="nx">controllers</span><span class="p">[</span><span class="nx">request</span><span class="p">.</span><span class="nx">controller</span><span class="p">][</span><span class="nx">request</span><span class="p">.</span><span class="nx">action</span><span class="p">])(</span><span class="nx">request</span><span class="p">);</span></pre></div>
+        <div class='highlight'><pre>              <span class="nx">response</span> <span class="o">=</span> <span class="nx">getControllerActionResponseFor</span><span class="p">(</span><span class="nx">request</span><span class="p">);</span></pre></div>
       </td>
     </tr>
-    <tr id='section-32'>
+    <tr id='section-42'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-32">&#182;</a>
+          <a class="pilcrow" href="#section-42">&#182;</a>
         </div>
         <p>The <code>afterFilter</code> callback might be useful, if we are not concerned
 whether the controller action responded at all, but still need
@@ -569,10 +735,10 @@ to do after controller processing.</p>
         <div class='highlight'><pre>              <span class="nx">runCallbacks</span><span class="p">(</span><span class="s1">&#39;afterFilter&#39;</span><span class="p">,</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span></pre></div>
       </td>
     </tr>
-    <tr id='section-33'>
+    <tr id='section-43'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-33">&#182;</a>
+          <a class="pilcrow" href="#section-43">&#182;</a>
         </div>
         <p>If the controller action responed to hash parameters with data,
 we can proceed to callbacks and rendering.</p>
@@ -581,65 +747,10 @@ we can proceed to callbacks and rendering.</p>
         <div class='highlight'><pre>              <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span></pre></div>
       </td>
     </tr>
-    <tr id='section-34'>
+    <tr id='section-44'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-34">&#182;</a>
-        </div>
-        <p>The <code>beforeRender</code> callback might be useful for cleaning up the
-previous view or detaching some events.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>                <span class="nx">runCallbacks</span><span class="p">(</span><span class="s1">&#39;beforeRender&#39;</span><span class="p">,</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-35'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-35">&#182;</a>
-        </div>
-        <p>Assume the controller name for the template and using
-single action controllers called <code>handler</code>.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>                <span class="nx">templateToRender</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">controller</span><span class="p">;</span>
-           </pre></div>
-      </td>
-    </tr>
-    <tr id='section-36'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-36">&#182;</a>
-        </div>
-        <p>The controller can pass a name of the template to render
-in the options part of the response. Otherwise it can be
-assumed by the action name.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>                <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span><span class="p">)</span> <span class="p">{</span>
-                  <span class="nx">templateToRender</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span><span class="p">;</span>
-                  <span class="k">delete</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span><span class="p">;</span>
-                <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">action</span><span class="p">)</span> <span class="p">{</span>                                    </pre></div>
-      </td>
-    </tr>
-    <tr id='section-37'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-37">&#182;</a>
-        </div>
-        <p>If action is passed, we will assume that action name
-as template definition.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>                  <span class="nx">templateToRender</span> <span class="o">+=</span> <span class="s1">&#39;__&#39;</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">action</span><span class="p">;</span>
-                <span class="p">}</span> 
-                <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span> <span class="o">=</span> <span class="nx">templateToRender</span><span class="p">;</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-38'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-38">&#182;</a>
+          <a class="pilcrow" href="#section-44">&#182;</a>
         </div>
         <p>Some controller actions have no need of a rendered response.
 Those can be popups for instance, triggered by hash changes.</p>
@@ -650,22 +761,46 @@ Those can be popups for instance, triggered by hash changes.</p>
                 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span></pre></div>
       </td>
     </tr>
-    <tr id='section-39'>
+    <tr id='section-45'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-39">&#182;</a>
+          <a class="pilcrow" href="#section-45">&#182;</a>
         </div>
-        <p>Finally the template is rendered and the data and options given
-from the action are passed into.</p>
+        <p>The <code>beforeRender</code> callback might be useful for cleaning up the
+previous view or detaching some events.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                  <span class="nx">renderTemplate</span><span class="p">(</span><span class="nx">templateToRender</span><span class="p">,</span> <span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">,</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">);</span></pre></div>
+        <div class='highlight'><pre>                  <span class="nx">runCallbacks</span><span class="p">(</span><span class="s1">&#39;beforeRender&#39;</span><span class="p">,</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span></pre></div>
       </td>
     </tr>
-    <tr id='section-40'>
+    <tr id='section-46'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-40">&#182;</a>
+          <a class="pilcrow" href="#section-46">&#182;</a>
+        </div>
+        <p>Response object should give information which template was used.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                  <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span> <span class="o">=</span> <span class="nx">getTemplateNameFor</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-47'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-47">&#182;</a>
+        </div>
+        <p>Finally the template is rendered and the data and options given
+from the action are passed into. The rendered template immediately
+replaces current contents of the app container.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                  <span class="nx">containerElement</span><span class="p">.</span><span class="nx">empty</span><span class="p">().</span><span class="nx">html</span><span class="p">(</span><span class="nx">renderTemplate</span><span class="p">(</span><span class="nx">response</span><span class="p">));</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-48'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-48">&#182;</a>
         </div>
         <p>The <code>afterRender</code> callback is usually the place where DOM events
 should be attached to the newly rendered html.</p>
@@ -674,10 +809,27 @@ should be attached to the newly rendered html.</p>
         <div class='highlight'><pre>                  <span class="nx">runCallbacks</span><span class="p">(</span><span class="s1">&#39;afterRender&#39;</span><span class="p">,</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span></pre></div>
       </td>
     </tr>
-    <tr id='section-41'>
+    <tr id='section-49'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-41">&#182;</a>
+          <a class="pilcrow" href="#section-49">&#182;</a>
+        </div>
+        <p>If the <code>preloadPaths</code> property is specified in the controller response
+we will preload all paths in the rendered container, by memoizing the
+controller responses as well the rendered templates, but without callbacks.
+The list of all preloaded paths is attached to the response, for
+possible later use.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                  <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">preloadPaths</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">response</span><span class="p">.</span><span class="nx">preloadedPaths</span> <span class="o">=</span> <span class="nx">preloadElementPaths</span><span class="p">(</span><span class="nx">containerElement</span><span class="p">);</span>
+                  <span class="p">}</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-50'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-50">&#182;</a>
         </div>
         <p>We must ensure we are scrolling to the page top,
 to simulate a well known page load behaviour</p>
@@ -687,10 +839,10 @@ to simulate a well known page load behaviour</p>
                 <span class="p">}</span></pre></div>
       </td>
     </tr>
-    <tr id='section-42'>
+    <tr id='section-51'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-42">&#182;</a>
+          <a class="pilcrow" href="#section-51">&#182;</a>
         </div>
         <p>The response returned can ask for the app to redirect the page,
 most likely to another SPA hash bang path, but also to another url
@@ -700,31 +852,31 @@ via the returned <code>redirectTo</code> property.</p>
 with the <code>renderNothing</code> option to avoid any rendering before redirecting.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">redirectTo</span><span class="p">)</span> <span class="p">{</span>                  
+        <div class='highlight'><pre>                <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">redirectTo</span><span class="p">)</span> <span class="p">{</span>
                   <span class="nx">redirectToPath</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">redirectTo</span><span class="p">);</span>
                 <span class="p">}</span>
 
               <span class="p">}</span> <span class="k">else</span> <span class="p">{</span></pre></div>
       </td>
     </tr>
-    <tr id='section-43'>
+    <tr id='section-52'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-43">&#182;</a>
+          <a class="pilcrow" href="#section-52">&#182;</a>
         </div>
         <p>The route has been recognized, but the controller returned an
 empty response probably the object does not exist in the
 payload (like wrong id).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                <span class="nx">renderTemplate</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="p">{</span> <span class="nx">cache</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+        <div class='highlight'><pre>                <span class="nx">renderTemplate</span><span class="p">({</span> <span class="nx">options</span> <span class="o">:</span> <span class="p">{</span> <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;404&#39;</span><span class="p">,</span> <span class="nx">cache</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">});</span>
               <span class="p">}</span></pre></div>
       </td>
     </tr>
-    <tr id='section-44'>
+    <tr id='section-53'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-44">&#182;</a>
+          <a class="pilcrow" href="#section-53">&#182;</a>
         </div>
         <p>Previous hash and exploded params out of it are kept
 so they can be given in the next request&rsquo;s hash, as a
@@ -732,13 +884,13 @@ context aid.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>              <span class="nx">previousParams</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">params</span><span class="p">;</span>
-              <span class="nx">previousHash</span>   <span class="o">=</span> <span class="nx">currentHash</span><span class="p">;</span></pre></div>
+              <span class="nx">previousPath</span>   <span class="o">=</span> <span class="nx">currentPath</span><span class="p">;</span></pre></div>
       </td>
     </tr>
-    <tr id='section-45'>
+    <tr id='section-54'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-45">&#182;</a>
+          <a class="pilcrow" href="#section-54">&#182;</a>
         </div>
         <p>The handler of the route is finishing and polling is allowed
 again &ndash; influences only older browsers.</p>
@@ -746,14 +898,34 @@ again &ndash; influences only older browsers.</p>
       <td class=code>
         <div class='highlight'><pre>              <span class="nx">pollingAllowed</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
             <span class="p">}</span>
-          <span class="p">}</span>        
+          <span class="p">}</span>
+        <span class="p">},</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-55'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-55">&#182;</a>
+        </div>
+        <p>Starts the SPA app router, not forgetting to process the current
+hash path, so the SPA app jumps to the desired state &ndash; as in the
+case of copy/pasting a whole url.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="nx">startRouter</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">isHashChangeSupported</span><span class="p">())</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;hashchange&#39;</span><span class="p">,</span> <span class="nx">router</span><span class="p">);</span>
+          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">setInterval</span><span class="p">(</span><span class="nx">router</span><span class="p">,</span> <span class="nx">pollingInterval</span><span class="p">);</span>
+          <span class="p">}</span>
+          <span class="nx">router</span><span class="p">();</span>
         <span class="p">};</span></pre></div>
       </td>
     </tr>
-    <tr id='section-46'>
+    <tr id='section-56'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-46">&#182;</a>
+          <a class="pilcrow" href="#section-56">&#182;</a>
         </div>
         <p>Ensure there is a container of jQuery object / DOM element
 to work with as a SPA. The rendering of pages will happen there.</p>
@@ -761,23 +933,22 @@ to work with as a SPA. The rendering of pages will happen there.</p>
       <td class=code>
         <div class='highlight'><pre>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">containerElement</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;(spa) container does not exist&#39;</span><span class="p">);</span>
-    <span class="p">}</span>    
-    </pre></div>
+    <span class="p">}</span></pre></div>
       </td>
     </tr>
-    <tr id='section-47'>
+    <tr id='section-57'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-47">&#182;</a>
+          <a class="pilcrow" href="#section-57">&#182;</a>
         </div>
         <p>Views templates are fetched at initialization time and memoized into the
 <code>templatesMemo</code> object from where they will be used instead from the DOM.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;script[type=&#39;text/html&#39;]&quot;</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span> <span class="p">{</span>       
+        <div class='highlight'><pre>    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;script[type=&#39;text/html&#39;]&quot;</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
       <span class="kd">var</span> <span class="nx">templateEl</span>   <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">el</span><span class="p">),</span>
           <span class="nx">templateName</span> <span class="o">=</span> <span class="nx">templateEl</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">);</span>
-      
+
       <span class="k">if</span> <span class="p">(</span><span class="nx">templateName</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;spa__&#39;</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">templateName</span> <span class="o">=</span> <span class="nx">templateName</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
       <span class="p">}</span>
@@ -785,10 +956,10 @@ to work with as a SPA. The rendering of pages will happen there.</p>
     <span class="p">});</span></pre></div>
       </td>
     </tr>
-    <tr id='section-48'>
+    <tr id='section-58'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-48">&#182;</a>
+          <a class="pilcrow" href="#section-58">&#182;</a>
         </div>
         <p>Expose public interfaces to the SPA object, so controllers/actions
 and routes can be injected.</p>
@@ -797,10 +968,10 @@ and routes can be injected.</p>
         <div class='highlight'><pre>    <span class="k">return</span> <span class="p">{</span></pre></div>
       </td>
     </tr>
-    <tr id='section-49'>
+    <tr id='section-59'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-49">&#182;</a>
+          <a class="pilcrow" href="#section-59">&#182;</a>
         </div>
         <p>The helpers object exposes some of the internals which might be found
 useful in the application, like templates, redirects and memoization.
@@ -823,37 +994,37 @@ is kept in one object and place.</p>
           <span class="k">if</span> <span class="p">(</span><span class="nx">templatesMemo</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">templateName</span><span class="p">))</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nx">templatesMemo</span><span class="p">[</span><span class="nx">templateName</span><span class="p">];</span>
           <span class="p">}</span>
-        <span class="p">},</span>    
+        <span class="p">},</span>
 
-        <span class="nx">getMemoized</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">bucket</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">getterFunc</span><span class="p">,</span> <span class="nx">shouldMemoize</span><span class="p">)</span> <span class="p">{</span>
-          <span class="k">return</span> <span class="nx">memoize</span><span class="p">(</span><span class="nx">bucket</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">getterFunc</span><span class="p">,</span> <span class="nx">shouldMemoize</span><span class="p">);</span>
+        <span class="nx">getMemoized</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">bucket</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">getterFunc</span><span class="p">,</span> <span class="nx">skipMemoize</span><span class="p">,</span> <span class="nx">conditionalFunc</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="nx">memoize</span><span class="p">(</span><span class="nx">bucket</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">getterFunc</span><span class="p">,</span> <span class="nx">skipMemoize</span><span class="p">,</span> <span class="nx">conditionalFunc</span><span class="p">);</span>
         <span class="p">}</span>
       <span class="p">},</span></pre></div>
       </td>
     </tr>
-    <tr id='section-50'>
+    <tr id='section-60'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-50">&#182;</a>
+          <a class="pilcrow" href="#section-60">&#182;</a>
         </div>
-        <p>Method which will selectively turn debug logging on or off.</p>
+        <p>This method will selectively turn debug logging on or off.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>      <span class="nx">setDebug</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>                                               
-        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">value</span> <span class="o">!==</span> <span class="s1">&#39;undefined&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <div class='highlight'><pre>      <span class="nx">setDebug</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">!==</span> <span class="s1">&#39;undefined&#39;</span><span class="p">)</span> <span class="p">{</span>
           <span class="nx">debugging</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
         <span class="p">}</span>
       <span class="p">},</span></pre></div>
       </td>
     </tr>
-    <tr id='section-51'>
+    <tr id='section-61'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-51">&#182;</a>
+          <a class="pilcrow" href="#section-61">&#182;</a>
         </div>
         <p>If the default renderer (templating engine) won&rsquo;t do, a new one
 can be set via this method. The signiture is function(template, data),
-where template is a text/html file and data is of JSON format.</p>
+where template is a <code>text/html</code> file and data is of JSON format.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>      <span class="nx">setRenderer</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newRenderer</span><span class="p">)</span> <span class="p">{</span>
@@ -862,10 +1033,10 @@ where template is a text/html file and data is of JSON format.</p>
       <span class="p">},</span></pre></div>
       </td>
     </tr>
-    <tr id='section-52'>
+    <tr id='section-62'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-52">&#182;</a>
+          <a class="pilcrow" href="#section-62">&#182;</a>
         </div>
         <p>With this method we can extend in bulk the helpers object below.
 Adding single methods is also easy by directly defining them on
@@ -877,10 +1048,10 @@ the <code>spaApp.helpers</code>.</p>
       <span class="p">},</span></pre></div>
       </td>
     </tr>
-    <tr id='section-53'>
+    <tr id='section-63'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-53">&#182;</a>
+          <a class="pilcrow" href="#section-63">&#182;</a>
         </div>
         <p>Controllers hold the main app logic/actions and are injected here,
 by extending the private object <code>controllers</code>. The argument
@@ -896,13 +1067,13 @@ of the routed controller action.</p>
       <td class=code>
         <div class='highlight'><pre>      <span class="nx">addControllers</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newControllers</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">controllers</span><span class="p">,</span> <span class="nx">newControllers</span><span class="p">);</span>
-      <span class="p">},</span>      </pre></div>
+      <span class="p">},</span></pre></div>
       </td>
     </tr>
-    <tr id='section-54'>
+    <tr id='section-64'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-54">&#182;</a>
+          <a class="pilcrow" href="#section-64">&#182;</a>
         </div>
         <p>Callbacks are methods which need to run after specific events in the code.
 While controllers can defined own callback which are of higher priority,
@@ -922,30 +1093,29 @@ as it executes before the controller action.</p>
       <span class="p">},</span></pre></div>
       </td>
     </tr>
-    <tr id='section-55'>
+    <tr id='section-65'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-55">&#182;</a>
+          <a class="pilcrow" href="#section-65">&#182;</a>
         </div>
         <p>Routes map url hash bang paths to controllers and their respective
 actions. First added routes have higher priority as they are matched
 via regular expressions. The argument <code>newRoutes</code> is expected to be an
 array of object paths.</p>
 
-<p>If action property is ommited above, the app will assume it&rsquo;s
-called <code>handler</code>. You can define as many routes as needed.</p>
+<p>If action property is ommited above, the app will assume it&rsquo;s called <code>handler</code>
+(from DEFAULT_ACTION_NAME). You can define as many routes as needed.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>      <span class="nx">addRoutes</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newRoutes</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">$</span><span class="p">.</span><span class="nx">merge</span><span class="p">(</span><span class="nx">routes</span><span class="p">,</span> <span class="nx">newRoutes</span><span class="p">);</span>
-      <span class="p">},</span>
-      </pre></div>
+      <span class="p">},</span></pre></div>
       </td>
     </tr>
-    <tr id='section-56'>
+    <tr id='section-66'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-56">&#182;</a>
+          <a class="pilcrow" href="#section-66">&#182;</a>
         </div>
         <p>Start the app by triggering the router to start listening for path
 changes. The method has been wrapped in anonymous action for future changes.</p>
