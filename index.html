@@ -24,24 +24,7 @@
         
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="cm">/*</span>
-<span class="cm"> *             mm###########mmm</span>
-<span class="cm"> *          m####################m</span>
-<span class="cm"> *        m#####`&quot;#m m###&quot;&quot;&quot;&#39;######m</span>
-<span class="cm"> *       ######*&quot;  &quot;   &quot;   &quot;mm#######</span>
-<span class="cm"> *     m####&quot;  ,             m&quot;#######m       SPA (Single Page App) / jQuery</span>
-<span class="cm"> *    m#### m*&quot; ,&#39;  ;     ,   &quot;########m      </span>
-<span class="cm"> *    ####### m*   m  |#m  ;  m ########      https://github.com/dejanstrbac/spa</span>
-<span class="cm"> *   |######### mm#  |####  #m##########|</span>
-<span class="cm"> *    ###########|  |######m############</span>
-<span class="cm"> *    &quot;##########|  |##################&quot;</span>
-<span class="cm"> *     &quot;#########  |## /##############&quot;</span>
-<span class="cm"> *       ########|  # |/ m###########</span>
-<span class="cm"> *        &quot;#######      ###########&quot;</span>
-<span class="cm"> *          &quot;&quot;&quot;&quot;&quot;&quot;       &quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
-<span class="cm"> */</span>
-
-<span class="p">;(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">$</span> <span class="p">)</span> <span class="p">{</span>
+        <div class='highlight'><pre><span class="p">;(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">$</span> <span class="p">)</span> <span class="p">{</span>
   <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">||</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
       </td>
     </tr>
@@ -178,7 +161,7 @@ method public.</p>
           <a class="pilcrow" href="#section-11">&#182;</a>
         </div>
         <p>If the given key is an Array, casting to string will join its
-elements [1,2] => &ldquo;1,2&rdquo; which is again sufficient for the key.</p>
+elements (e.g.) [1,2] into &ldquo;1,2&rdquo; which is again sufficient for the key.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="nx">key</span> <span class="o">=</span> <span class="nx">key</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span></pre></div>
@@ -303,6 +286,7 @@ such as <code>beforeRender</code>, <code>afterRender</code> etc. The logic is th
 so this method has been extracted out and generalized. There are
 two levels of callbacks, one on the app level, which will run for
 every controller, and there are callbacks on the controller level.
+/
 Controller callbacks have higher priority than the app ones as they
 are closer to the logic code.</p>
       </td>
@@ -325,8 +309,8 @@ are closer to the logic code.</p>
           <a class="pilcrow" href="#section-19">&#182;</a>
         </div>
         <p>SPA includes own simple dummy renderer. It can be redefined by calling
-<code>setRenderer()</code> which will override this method. If there is a problem,
-it should return null or false.</p>
+<code>setRenderer</code> which will override this method. If there is a problem,
+it should return either null or false.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>        <span class="nx">templateRenderer</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>          
@@ -344,10 +328,10 @@ it should return null or false.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-20">&#182;</a>
         </div>
-        <p>@TODO: We need a preloader here of content. Currently not so dry.
+        <p><code>@TODO: We need a preloader here of content. Currently not so dry.
   routeEntry = routeFor(urlpath)
-  response = &hellip;
-maybe even use it in the router</p>
+  response = ...
+maybe even use it in the router</code></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          </pre></div>
@@ -489,7 +473,7 @@ SPA routes start with <code>#!</code> &ndash; (hash bang).</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-27">&#182;</a>
         </div>
-        <p>Router is invoked on every hash change. The route is parsed and
+        <p>The router is invoked on every hash change. The route is parsed and
 compared to predefined routes. Matching controller/action is then
 called and passed parameters found in the hash.</p>
       </td>
@@ -529,8 +513,8 @@ controller/action &amp; re-renderring is avoided.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-29">&#182;</a>
         </div>
-        <p>The Route has not been recognized and we need to simulate 404.
-The 404 template can be defined just as any other.</p>
+        <p>The route has not been recognized and we need to simulate a
+404 response. The 404 template can be defined just as any other.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>              <span class="nx">renderTemplate</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="p">{</span> <span class="nx">cache</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
@@ -786,8 +770,8 @@ to work with as a SPA. The rendering of pages will happen there.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-47">&#182;</a>
         </div>
-        <p>Views templates are fetched at initialization time and memoized into a
-templatesMemo object from where they will be used instead from the DOM.</p>
+        <p>Views templates are fetched at initialization time and memoized into the
+<code>templatesMemo</code> object from where they will be used instead from the DOM.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;script[type=&#39;text/html&#39;]&quot;</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span> <span class="p">{</span>       
