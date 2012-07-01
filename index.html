@@ -24,7 +24,23 @@
         
       </td>
       <td class=code>
-        <div class='highlight'><pre>
+        <div class='highlight'><pre><span class="cm">/*</span>
+<span class="cm"> *             mm###########mmm</span>
+<span class="cm"> *          m####################m</span>
+<span class="cm"> *        m#####`&quot;#m m###&quot;&quot;&quot;&#39;######m</span>
+<span class="cm"> *       ######*&quot;  &quot;   &quot;   &quot;mm#######</span>
+<span class="cm"> *     m####&quot;  ,             m&quot;#######m       SPA (Single Page App) / jQuery</span>
+<span class="cm"> *    m#### m*&quot; ,&#39;  ;     ,   &quot;########m      </span>
+<span class="cm"> *    ####### m*   m  |#m  ;  m ########      https://github.com/dejanstrbac/spa</span>
+<span class="cm"> *   |######### mm#  |####  #m##########|</span>
+<span class="cm"> *    ###########|  |######m############</span>
+<span class="cm"> *    &quot;##########|  |##################&quot;</span>
+<span class="cm"> *     &quot;#########  |## /##############&quot;</span>
+<span class="cm"> *       ########|  # |/ m###########</span>
+<span class="cm"> *        &quot;#######      ###########&quot;</span>
+<span class="cm"> *          &quot;&quot;&quot;&quot;&quot;&quot;       &quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="cm"> */</span>
+
 <span class="p">;(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">$</span> <span class="p">)</span> <span class="p">{</span>
   <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">||</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
       </td>
@@ -50,7 +66,7 @@ they would have to share URL namespace and routes.</p>
         </div>
         <p>Previous app state is saved given in the request to the controller as
 aid for context determination. In most cases it is not needed or used,
-but could be helpful for having a &ldquo;last seen products&rdquo; etc.</p>
+but could be helpful for having a section of last seen pages e.g.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>        <span class="nx">previousHash</span>   <span class="o">=</span> <span class="kc">null</span><span class="p">,</span> 
@@ -62,8 +78,8 @@ but could be helpful for having a &ldquo;last seen products&rdquo; etc.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-4">&#182;</a>
         </div>
-        <p>When hash listeners are not supported in older
-browsers, we will poll for hash changes every 333 milliseconds.</p>
+        <p>When hash listeners are not supported in older browsers, we will poll
+for hash changes every 333 milliseconds.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>        <span class="nx">pollingInterval</span> <span class="o">=</span> <span class="mi">333</span><span class="p">,</span></pre></div>
@@ -103,7 +119,7 @@ are injected via public interfaces.</p>
           <a class="pilcrow" href="#section-7">&#182;</a>
         </div>
         <p>Helper memo for aiding memoization in helpers and controllers,
-so extraction  from payload is optimized.</p>
+so extraction from payload is optimized.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>        <span class="nx">objectsMemo</span> <span class="o">=</span> <span class="p">{},</span></pre></div>
@@ -247,8 +263,8 @@ a redirect option (see below).</p>
         </div>
         <p>Not all browser support the onhashchange event. We must check
 and if not supported fallback to alternative solution of polling.
-The check is taken from Modernizr.js: documentMode logic from YUI to filter
-out IE8 Compatibility Mode which gives false positives.</p>
+The following check is taken from Modernizr.js: documentMode logic
+from YUI to filter out IE8 Compatibility Mode which gives false positives.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>        <span class="nx">isHashChangeSupported</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -283,7 +299,7 @@ case of copy/pasting a whole url.</p>
           <a class="pilcrow" href="#section-18">&#182;</a>
         </div>
         <p>There are callbacks defined in multiple places in the router,
-such as beforeRender, afterRender etc. The logic is the same,<br/>
+such as <code>beforeRender</code>, <code>afterRender</code> etc. The logic is the same,<br/>
 so this method has been extracted out and generalized. There are
 two levels of callbacks, one on the app level, which will run for
 every controller, and there are callbacks on the controller level.
@@ -309,7 +325,7 @@ are closer to the logic code.</p>
           <a class="pilcrow" href="#section-19">&#182;</a>
         </div>
         <p>SPA includes own simple dummy renderer. It can be redefined by calling
-setRenderer() which will override this method. If there is a problem,
+<code>setRenderer()</code> which will override this method. If there is a problem,
 it should return null or false.</p>
       </td>
       <td class=code>
@@ -366,7 +382,7 @@ preventing memory leaks.</p>
         <p>The cache key is the template name for nonmutating views, where the
 attribute cache is just set to true. To cache same views but for
 different data, the attribute cache needs to be set to some data
-that will uniquely identify it &ndash; e.g. ID of a product.</p>
+that will uniquely identify it &ndash; e.g. id of a product.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">cache</span><span class="p">)</span> <span class="p">{</span>
@@ -440,7 +456,7 @@ REST-like parameters which are returned.</p>
         </div>
         <p>Finding out the current route based on the information passed into
 the hash, and returning the route entry with all its content back.
-SPA routes start with &lsquo;#!&rsquo;&lsquo; &ndash; (hash bang).</p>
+SPA routes start with <code>#!</code> &ndash; (hash bang).</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>        <span class="nx">getRouteFor</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">hash</span><span class="p">)</span> <span class="p">{</span>
@@ -535,8 +551,8 @@ The 404 template can be defined just as any other.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-30">&#182;</a>
         </div>
-        <p>Run the callbacks defined in controller and on top level. Note
-that the response doesn&rsquo;t exist yet so it is not passed here.</p>
+        <p>Run the <code>beforeFilter</code> callbacks defined in controller and on top
+level. Note that the response doesn&rsquo;t exist yet so it is not passed here.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>              <span class="nx">runCallbacks</span><span class="p">(</span><span class="s1">&#39;beforeFilter&#39;</span><span class="p">,</span> <span class="nx">request</span><span class="p">);</span>
@@ -561,7 +577,7 @@ context determination of the origin page if needed.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-32">&#182;</a>
         </div>
-        <p>The afterFilter callback might be useful, if we are not concerned
+        <p>The <code>afterFilter</code> callback might be useful, if we are not concerned
 whether the controller action responded at all, but still need
 to do after controller processing.</p>
       </td>
@@ -586,7 +602,7 @@ we can proceed to callbacks and rendering.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-34">&#182;</a>
         </div>
-        <p>The beforeRender callback might be useful for cleaning up the
+        <p>The <code>beforeRender</code> callback might be useful for cleaning up the
 previous view or detaching some events.</p>
       </td>
       <td class=code>
@@ -599,7 +615,7 @@ previous view or detaching some events.</p>
           <a class="pilcrow" href="#section-35">&#182;</a>
         </div>
         <p>Assume the controller name for the template and using
-single action controllers called &lsquo;handler&rsquo;.</p>
+single action controllers called <code>handler</code>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>                <span class="nx">templateToRender</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">controller</span><span class="p">;</span>
@@ -612,7 +628,7 @@ single action controllers called &lsquo;handler&rsquo;.</p>
           <a class="pilcrow" href="#section-36">&#182;</a>
         </div>
         <p>The controller can pass a name of the template to render
-in the options  part of the response. Otherwise it can be
+in the options part of the response. Otherwise it can be
 assumed by the action name.</p>
       </td>
       <td class=code>
@@ -667,7 +683,7 @@ from the action are passed into.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-40">&#182;</a>
         </div>
-        <p>The afterRender callback is usually the place where DOM events
+        <p>The <code>afterRender</code> callback is usually the place where DOM events
 should be attached to the newly rendered html.</p>
       </td>
       <td class=code>
@@ -693,9 +709,11 @@ to simulate a well known page load behaviour</p>
           <a class="pilcrow" href="#section-42">&#182;</a>
         </div>
         <p>The response returned can ask for the app to redirect the page,
-most likely to another SPA hash bang path, but also to another url.
-Since this parameter runs late, after rendering, it can be nicely
-combined with renderNothing option or special template.</p>
+most likely to another SPA hash bang path, but also to another url
+via the returned <code>redirectTo</code> property.</p>
+
+<p>Since this executes late, after rendering, it can be combined
+with the <code>renderNothing</code> option to avoid any rendering before redirecting.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>                <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">redirectTo</span><span class="p">)</span> <span class="p">{</span>                  
@@ -803,7 +821,7 @@ and routes can be injected.</p>
         <p>The helpers object exposes some of the internals which might be found
 useful in the application, like templates, redirects and memoization.
 It is recommended to extend this object with own methods via
-the addHelpers defined below, so everything related to this SPA app
+the <code>addHelpers</code> defined below, so everything related to this SPA app
 is kept in one object and place.</p>
       </td>
       <td class=code>
@@ -867,7 +885,7 @@ where template is a text/html file and data is of JSON format.</p>
         </div>
         <p>With this method we can extend in bulk the helpers object below.
 Adding single methods is also easy by directly defining them on
-the spaApp.helpers.</p>
+the <code>spaApp.helpers</code>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>      <span class="nx">addHelpers</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newHelpers</span><span class="p">)</span> <span class="p">{</span>
@@ -885,8 +903,8 @@ by extending the private object <code>controllers</code>. The argument
 <code>newControllers</code> is expected to be an object whose properties are
 controllers of own properties which are actions.</p>
 
-<p>Properties with the following names beforeRender, afterRender,
-beforeFilter &amp; afterFilter define controller callbacks. To selectively
+<p>Properties with the following names <code>beforeRender</code>, <code>afterRender</code>,
+<code>beforeFilter</code> &amp; <code>afterFilter</code> define controller callbacks. To selectively
 execute code in the callback for specific action, you can switch over
 the property <code>action</code> of the request argument, containing the name
 of the routed controller action.</p>
@@ -907,10 +925,12 @@ While controllers can defined own callback which are of higher priority,
 here app level callbacks can be attached.</p>
 
 <p>The argument <code>newCallback</code> is  expected to be an object whose properties are
-callbacks with possible names beforeRender, afterRender, beforeFilter
-&amp; afterFilter define callbacks. To selectively execute a callback for
+callbacks with possible names <code>beforeRender</code>, <code>afterRender</code>, <code>beforeFilter</code>
+&amp; <code>afterFilter</code> define callbacks. To selectively execute a callback for
 specific action, we can switch over the name of the action present in
-the request argument.</p>
+the request argument passed to the callback. All callbacks accept two arguments
+<code>request</code> and <code>response</code>, except <code>beforeFilter</code> which accepts only <code>request</code>
+as it executes before the controller action.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>      <span class="nx">addCallbacks</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newCallbacks</span><span class="p">)</span> <span class="p">{</span>
