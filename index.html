@@ -24,8 +24,7 @@
         
       </td>
       <td class=code>
-        <div class='highlight'><pre>
-<span class="p">;(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">$</span> <span class="p">)</span> <span class="p">{</span>
+        <div class='highlight'><pre><span class="p">;(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">$</span> <span class="p">)</span> <span class="p">{</span>
   <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">||</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
       </td>
     </tr>
@@ -599,7 +598,7 @@ so bandwidth is preserved. If no parameter is passed,
         </div>
         <p>A bit of monkey business here. All images are replaced with
 BR elements so external resources are not automatically loaded
-when jQuery attaches the html to the DOM for parsing.</p>
+when jQuery attaches the html to the DOM tree for parsing.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="nx">htmlText</span> <span class="o">=</span> <span class="nx">htmlText</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\&lt;[iI][mM][gG]/g</span><span class="p">,</span> <span class="s1">&#39;&lt;br class=&quot;spa-image-preloading&quot;&#39;</span><span class="p">);</span>
@@ -1230,7 +1229,7 @@ via regular expressions. The argument <code>newRoutes</code> is expected to be a
 array of object paths.</p>
 
 <p>If action property is ommited above, the app will assume it&rsquo;s called <code>handler</code>
-(from DEFAULT_ACTION_NAME). You can define as many routes as needed.</p>
+(from <code>DEFAULT_ACTION_NAME</code>). You can define as many routes as needed.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>      <span class="nx">addRoutes</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newRoutes</span><span class="p">)</span> <span class="p">{</span>
