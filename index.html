@@ -770,7 +770,9 @@ controller/action &amp; re-renderring is avoided.</p>
 404 response. The 404 template can be defined just as any other.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>              <span class="nx">renderTemplate</span><span class="p">({</span> <span class="nx">options</span> <span class="o">:</span> <span class="p">{</span> <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;404&#39;</span><span class="p">,</span> <span class="nx">cache</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">});</span>
+        <div class='highlight'><pre>              <span class="nx">containerElement</span><span class="p">.</span><span class="nx">empty</span><span class="p">().</span><span class="nx">html</span><span class="p">(</span>
+                <span class="nx">renderTemplate</span><span class="p">({</span> <span class="nx">options</span> <span class="o">:</span> <span class="p">{</span> <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;404&#39;</span><span class="p">,</span> <span class="nx">cache</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">})</span>
+              <span class="p">);</span>
             <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
               <span class="nx">request</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="nx">path</span>           <span class="o">:</span> <span class="nx">currentPath</span><span class="p">,</span>
@@ -953,7 +955,9 @@ empty response probably the object does not exist in the
 payload (like wrong id).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                <span class="nx">renderTemplate</span><span class="p">({</span> <span class="nx">options</span> <span class="o">:</span> <span class="p">{</span> <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;404&#39;</span><span class="p">,</span> <span class="nx">cache</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">});</span>
+        <div class='highlight'><pre>                <span class="nx">containerElement</span><span class="p">.</span><span class="nx">empty</span><span class="p">().</span><span class="nx">html</span><span class="p">(</span>
+                  <span class="nx">renderTemplate</span><span class="p">({</span> <span class="nx">options</span> <span class="o">:</span> <span class="p">{</span> <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;404&#39;</span><span class="p">,</span> <span class="nx">cache</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">})</span>
+                <span class="p">);</span>
               <span class="p">}</span></pre></div>
       </td>
     </tr>
