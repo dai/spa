@@ -24,8 +24,51 @@
         
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="p">;(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">$</span> <span class="p">)</span> <span class="p">{</span>
-  <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">||</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>
+        <div class='highlight'><pre><span class="cm">/*</span>
+<span class="cm"> *             mm###########mmm</span>
+<span class="cm"> *          m####################m</span>
+<span class="cm"> *        m#####`&quot;#m m###&quot;&quot;&quot;&#39;######m</span>
+<span class="cm"> *       ######*&quot;  &quot;   &quot;   &quot;mm#######</span>
+<span class="cm"> *     m####&quot;  ,             m&quot;#######m       SPA (Single Page App) / jQuery</span>
+<span class="cm"> *    m#### m*&quot; ,&#39;  ;     ,   &quot;########m</span>
+<span class="cm"> *    ####### m*   m  |#m  ;  m ########      https://github.com/dejanstrbac/spa</span>
+<span class="cm"> *   |######### mm#  |####  #m##########|</span>
+<span class="cm"> *    ###########|  |######m############</span>
+<span class="cm"> *    &quot;##########|  |##################&quot;</span>
+<span class="cm"> *     &quot;#########  |## /##############&quot;</span>
+<span class="cm"> *       ########|  # |/ m###########</span>
+<span class="cm"> *        &quot;#######      ###########&quot;</span>
+<span class="cm"> *          &quot;&quot;&quot;&quot;&quot;&quot;       &quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="cm"> *</span>
+<span class="cm"> *  Copyright (c) 2012, Dejan Strbac</span>
+<span class="cm"> *  All rights reserved.</span>
+<span class="cm"> *</span>
+<span class="cm"> *  Redistribution and use in source and binary forms, with or without</span>
+<span class="cm"> *  modification, are permitted provided that the following conditions are met:</span>
+<span class="cm"> *</span>
+<span class="cm"> *  1. Redistributions of source code must retain the above copyright notice, this</span>
+<span class="cm"> *     list of conditions and the following disclaimer.</span>
+<span class="cm"> *  2. Redistributions in binary form must reproduce the above copyright notice,</span>
+<span class="cm"> *     this list of conditions and the following disclaimer in the documentation</span>
+<span class="cm"> *     and/or other materials provided with the distribution.</span>
+<span class="cm"> *</span>
+<span class="cm"> *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND</span>
+<span class="cm"> *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span>
+<span class="cm"> *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span>
+<span class="cm"> *  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR</span>
+<span class="cm"> *  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span>
+<span class="cm"> *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
+<span class="cm"> *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</span>
+<span class="cm"> *  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="cm"> *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS</span>
+<span class="cm"> *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+
+<span class="p">;(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">$</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">||</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+   <span class="kd">var</span>  <span class="nx">SPA_VERSION</span> <span class="o">=</span> <span class="mf">2.04</span><span class="p">,</span></pre></div>
       </td>
     </tr>
     <tr id='section-2'>
@@ -39,7 +82,7 @@ The following check is taken from Modernizr.js: documentMode logic
 from YUI to filter out IE8 Compatibility Mode which gives false positives.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="kd">var</span> <span class="nx">hashChangeSupported</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <div class='highlight'><pre>        <span class="nx">hashChangeSupported</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
           <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;onhashchange&#39;</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
                  <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">documentMode</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="o">||</span> <span class="nb">document</span><span class="p">.</span><span class="nx">documentMode</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">);</span>
         <span class="p">})(),</span></pre></div>
@@ -1260,7 +1303,9 @@ controller actions and helpers.</p>
         <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">!==</span> <span class="s1">&#39;undefined&#39;</span><span class="p">)</span> <span class="p">{</span>
           <span class="nx">debugging</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
         <span class="p">}</span>
-        <span class="nx">spaLog</span><span class="p">(</span><span class="s1">&#39;debug mode enabled&#39;</span><span class="p">);</span>
+        <span class="nx">spaLog</span><span class="p">(</span><span class="s1">&#39;jQuery SPA (Single Page App) framework v&#39;</span> <span class="o">+</span> <span class="nx">SPA_VERSION</span><span class="p">);</span>
+        <span class="nx">spaLog</span><span class="p">(</span><span class="s1">&#39;https://github.com/dejanstrbac/spa\n\n&#39;</span><span class="p">);</span>
+        <span class="nx">spaLog</span><span class="p">(</span><span class="s1">&#39;Debug mode enabled&#39;</span><span class="p">);</span>
       <span class="p">},</span></pre></div>
       </td>
     </tr>
