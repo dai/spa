@@ -470,7 +470,9 @@ determine whether the response should be memoized or not.</p>
 <code>options.cache</code> is not <code>undefined</code>, <code>0</code>, <code>null</code>, or <code>''</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="k">return</span> <span class="o">!!</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cache</span><span class="p">;</span>
+        <div class='highlight'><pre>            <span class="k">return</span> <span class="nx">response</span> <span class="o">&amp;&amp;</span>
+                     <span class="nx">response</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="s1">&#39;options&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+                       <span class="o">!!</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cache</span><span class="p">;</span>
           <span class="p">});</span>
         <span class="p">},</span></pre></div>
       </td>
@@ -615,10 +617,10 @@ circumvented and the getter function will be executed.</p>
               <span class="k">if</span> <span class="p">(</span><span class="nx">tmpView</span><span class="p">)</span> <span class="p">{</span>
                 <span class="k">return</span> <span class="s1">&#39;&lt;div id=&quot;spa__wrap&quot;&gt;&#39;</span> <span class="o">+</span> <span class="nx">tmpView</span> <span class="o">+</span> <span class="s1">&#39;&lt;/div&gt;&#39;</span><span class="p">;</span>
               <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;template could not be rendered &gt;&gt; &#39;</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span><span class="p">);</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;template error &gt;&gt; &#39;</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span><span class="p">);</span>
               <span class="p">}</span>
             <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-              <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;template does not exist &gt;&gt; &#39;</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span><span class="p">);</span>
+              <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;template not found &gt;&gt; &#39;</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">template</span><span class="p">);</span>
             <span class="p">}</span>
           <span class="p">},</span> <span class="p">(</span><span class="nx">cacheKey</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">));</span>
 
@@ -1046,16 +1048,17 @@ across pages.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>                  <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">preloadPaths</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">response</span><span class="p">.</span><span class="nx">preloadedPaths</span> <span class="o">=</span> <span class="nx">memoize</span><span class="p">(</span><span class="s1">&#39;spa__preloaded_paths&#39;</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">path</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-                      <span class="kd">var</span> <span class="nx">responsePaths</span> <span class="o">=</span> <span class="nx">preloadContainerPaths</span><span class="p">(</span><span class="nx">containerElement</span><span class="p">);</span>
-                      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">preloadingIntervalId</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">preloadingIntervalId</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span>
-                          <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">emptyPreloadStack</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span> <span class="p">},</span>
-                          <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">preloadStackDelay</span> <span class="o">||</span> <span class="nx">PRELOAD_STACK_POP_DELAY</span>
-                        <span class="p">);</span>
-                      <span class="p">}</span>
-                      <span class="k">return</span> <span class="nx">responsePaths</span><span class="p">;</span>
-                    <span class="p">});</span>
+                    <span class="nx">response</span><span class="p">.</span><span class="nx">preloadedPaths</span> <span class="o">=</span> <span class="nx">memoize</span><span class="p">(</span><span class="s1">&#39;spa__preloaded_paths&#39;</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">path</span><span class="p">,</span>
+                      <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                        <span class="kd">var</span> <span class="nx">responsePaths</span> <span class="o">=</span> <span class="nx">preloadContainerPaths</span><span class="p">(</span><span class="nx">containerElement</span><span class="p">);</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">preloadingIntervalId</span><span class="p">)</span> <span class="p">{</span>
+                          <span class="nx">preloadingIntervalId</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span>
+                            <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">emptyPreloadStack</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span> <span class="p">},</span>
+                            <span class="nx">response</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">preloadStackDelay</span> <span class="o">||</span> <span class="nx">PRELOAD_STACK_POP_DELAY</span>
+                          <span class="p">);</span>
+                        <span class="p">}</span>
+                        <span class="k">return</span> <span class="nx">responsePaths</span><span class="p">;</span>
+                      <span class="p">});</span>
                   <span class="p">}</span></pre></div>
       </td>
     </tr>
