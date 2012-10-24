@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html;charset=utf-8">
-  <title>jquery.spa.js</title>
+  <title>spa.js</title>
   <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
   <table cellspacing=0 cellpadding=0>
   <thead>
     <tr>
-      <th class=docs><h1>jquery.spa.js</h1></th>
+      <th class=docs><h1>spa.js</h1></th>
       <th class=code></th>
     </tr>
   </thead>
@@ -26,10 +26,10 @@
       <td class=code>
         <div class='highlight'><pre>
 
-<span class="p">;(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">$</span> <span class="p">)</span> <span class="p">{</span>
+<span class="p">;(</span><span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spa</span> <span class="o">||</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
-   <span class="kd">var</span>  <span class="nx">SPA_VERSION</span> <span class="o">=</span> <span class="mf">2.10</span><span class="p">,</span></pre></div>
+   <span class="kd">var</span>  <span class="nx">SPA_VERSION</span> <span class="o">=</span> <span class="mf">2.11</span><span class="p">,</span></pre></div>
       </td>
     </tr>
     <tr id='section-2'>
@@ -1159,7 +1159,7 @@ across pages.</p>
 to simulate a well known page load behaviour</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;body,html,document&quot;</span><span class="p">).</span><span class="nx">scrollTop</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <div class='highlight'><pre>                  <span class="nb">window</span><span class="p">.</span><span class="nx">scrollTo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
                 <span class="p">}</span></pre></div>
       </td>
     </tr>
@@ -1539,7 +1539,7 @@ changes. The method has been wrapped in anonymous action for future changes.</p>
     <span class="p">};</span>
 
   <span class="p">};</span>
-<span class="p">})(</span> <span class="nx">jQuery</span> <span class="p">);</span></pre></div>
+<span class="p">})(</span><span class="nb">window</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">$</span><span class="p">);</span></pre></div>
       </td>
     </tr>
   </table>
